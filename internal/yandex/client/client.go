@@ -57,7 +57,7 @@ type YandexClient struct {
 	folderID string
 }
 
-func NewYandexClient(folderID string, authKeyFile string) (*YandexClient, error) {
+func NewYandexClient(folderID string, authKeyFile string, endpoint string) (*YandexClient, error) {
 	if authKeyFile == "" {
 		return nil, fmt.Errorf("auth-key-file must be set")
 	}
@@ -77,9 +77,16 @@ func NewYandexClient(folderID string, authKeyFile string) (*YandexClient, error)
 		return nil, fmt.Errorf("failed to create credentials: %v", err)
 	}
 
-	sdk, err := ycsdk.Build(context.Background(), ycsdk.Config{
+	config := ycsdk.Config{
 		Credentials: credentials,
-	})
+	}
+
+	// Set custom endpoint if provided
+	if endpoint != "" {
+		config.Endpoint = endpoint
+	}
+
+	sdk, err := ycsdk.Build(context.Background(), config)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create Yandex Cloud SDK: %v", err)
 	}

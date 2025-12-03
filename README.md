@@ -21,6 +21,7 @@ provider:
     args:
       - --folder-id=YOUR_FOLDER_ID
       - --auth-key-file=/etc/kubernetes/key.json
+      # - --endpoint=api.cloud.yandex.net:443  # Optional: uncomment to use custom endpoint
     extraVolumeMounts:
       - name: yandexconfig
         mountPath: /etc/kubernetes/
@@ -37,6 +38,7 @@ The webhook requires the following command line arguments:
 
 - `--folder-id`: Yandex Cloud folder ID where your DNS zones are located.
 - `--auth-key-file`: Path to the Yandex Cloud service account key file.
+- `--endpoint`: (Optional) Yandex Cloud API endpoint. Defaults to `api.cloud.yandex.net:443`.
 
 ## Authentication
 
