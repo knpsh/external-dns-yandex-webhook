@@ -10,6 +10,7 @@ import (
 type Config struct {
 	FolderID    string       `mapstructure:"folder_id"`
 	AuthKeyFile string       `mapstructure:"auth_key_file"`
+	Endpoint    string       `mapstructure:"endpoint"`
 	Server      ServerConfig `mapstructure:"server"`
 }
 
@@ -31,6 +32,7 @@ func LoadConfig() (*Config, error) {
 	// Define CLI flags
 	pflag.String("folder-id", "", "Yandex Cloud folder ID")
 	pflag.String("auth-key-file", "/etc/kubernetes/key.json", "Path to Yandex Cloud service account key file")
+	pflag.String("endpoint", "", "Yandex Cloud API endpoint (optional, defaults to api.cloud.yandex.net:443)")
 	pflag.Int("webhook-port", 8888, "Port for webhook server")
 	pflag.Int("health-port", 8080, "Port for health check server")
 	pflag.Parse()
@@ -41,6 +43,9 @@ func LoadConfig() (*Config, error) {
 	}
 	if err := viper.BindPFlag("auth_key_file", pflag.Lookup("auth-key-file")); err != nil {
 		return nil, fmt.Errorf("error binding auth-key-file flag: %v", err)
+	}
+	if err := viper.BindPFlag("endpoint", pflag.Lookup("endpoint")); err != nil {
+		return nil, fmt.Errorf("error binding endpoint flag: %v", err)
 	}
 	if err := viper.BindPFlag("server.webhook_port", pflag.Lookup("webhook-port")); err != nil {
 		return nil, fmt.Errorf("error binding webhook-port flag: %v", err)

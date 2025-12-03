@@ -1,6 +1,7 @@
 folder_id: ""
 auth_key_file: ""
+endpoint: ""
 
 server:
   webhook_port: 8888
-  health_port: 8080 
+  health_port: 8080
