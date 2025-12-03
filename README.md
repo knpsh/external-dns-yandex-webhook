@@ -16,8 +16,8 @@ provider:
   name: webhook
   webhook:
     image:
-      repository: ghcr.io/ismailbaskin/external-dns-yandex-webhook
-      tag: 1.0.0
+      repository: ghcr.io/knpsh/external-dns-yandex-webhook
+      tag: 1.0.2-amd64
     args:
       - --folder-id=YOUR_FOLDER_ID
       - --auth-key-file=/etc/kubernetes/key.json
